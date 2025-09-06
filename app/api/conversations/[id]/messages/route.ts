@@ -8,7 +8,11 @@ const messageSchema = z.object({
   type: z.enum(['text', 'image', 'system']).optional(),
 });
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const auth = await requireAuth(req);
   if ('error' in auth) return jsonError(auth.error.status, 'unauthorized', auth.error.message);
   const { supabase } = auth;
@@ -18,7 +22,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   let query = supabase
     .from('messages')
     .select('*')
-    .eq('conversation_id', params.id)
+    .eq('conversation_id', id)
     .order('created_at', { ascending: false })
     .limit(limit);
   if (cursor) {
@@ -29,7 +33,11 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   return NextResponse.json(data);
 }
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const auth = await requireAuth(req);
   if ('error' in auth) return jsonError(auth.error.status, 'unauthorized', auth.error.message);
   const { supabase, user } = auth;
@@ -39,7 +47,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   const { data, error } = await supabase
     .from('messages')
     .insert({
-      conversation_id: params.id,
+      conversation_id: id,
       sender_id: user.id,
       content: parsed.data.content,
       type: parsed.data.type ?? 'text',

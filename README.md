@@ -21,14 +21,14 @@ All endpoints accept/return JSON. Authenticate using the `Authorization: Bearer 
 ```bash
 curl -X POST http://localhost:3000/api/auth/signup \
   -H 'Content-Type: application/json' \
-  -d '{"email":"user@example.com","password":"password"}'
+  -d '{"email":"an38570@gmail.com","password":"password"}'
 ```
 
 ### Login
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
   -H 'Content-Type: application/json' \
-  -d '{"email":"user@example.com","password":"password"}'
+  -d '{"email":"an38570@gmail.com","password":"password"}'
 ```
 
 ### Get profile

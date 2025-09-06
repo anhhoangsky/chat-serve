@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/cleanup-sharp.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.2",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.3.1",
+    "@types/react": "^19.1.12",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",
     "eslint": "^9.35.0",
